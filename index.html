@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0a">
+<meta name="description" content="Haven — privacy-first wellbeing support and counsellor triage demo.">
+<title>Haven — Wellbeing Support</title>
+<style>
+:root{--bg:#090a09;--panel:#111311;--panel2:#171a17;--line:#282d28;--text:#f4f5f1;--muted:#9da59d;--accent:#ff8a32;--accent2:#ffc078;--good:#67d391;--warn:#ffbd59;--danger:#ff6868;--r:22px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}button{cursor:pointer}a{color:inherit}
+body{min-height:100vh}.app{min-height:100vh;display:flex}.side{width:260px;border-right:1px solid var(--line);padding:24px 16px;position:fixed;inset:0 auto 0 0;background:#0c0d0c;display:flex;flex-direction:column;z-index:5}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;margin:4px 10px 28px}.mark{width:35px;height:35px;border-radius:12px;background:linear-gradient(145deg,#ff9c4a,#e65f19);display:grid;place-items:center;color:#111;font-weight:900}
+.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;color:var(--muted);padding:12px 13px;border-radius:13px;text-align:left;font-weight:650}.nav button:hover,.nav button.active{background:#191b19;color:#fff}.side-foot{margin-top:auto;color:#6f776f;font-size:12px;line-height:1.5;padding:10px}
+main{margin-left:260px;width:calc(100% - 260px);padding:26px;max-width:1500px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:800}.title{font-size:32px;font-weight:850;margin:5px 0}.sub{color:var(--muted);font-size:14px}.avatar{width:42px;height:42px;border-radius:50%;background:#242824;display:grid;place-items:center;font-weight:800}
+.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:linear-gradient(180deg,#131613,#101210);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:0 14px 35px #0003}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}
+.hero{padding:28px;min-height:245px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(circle at 85% 10%,#ff8a321c,transparent 38%),linear-gradient(145deg,#171a17,#101210)}
+.hero h2{font-size:28px;margin:8px 0 8px;max-width:650px}.hero p{color:var(--muted);max-width:620px;line-height:1.6}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#1a1d1a;color:#fff;border-radius:13px;padding:11px 16px;font-weight:750}.btn.primary{background:var(--accent);border-color:var(--accent);color:#111}.btn.ghost:hover{border-color:#4a514a}.stat{display:flex;justify-content:space-between;align-items:end}.stat b{font-size:30px}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#222722;color:#bfc8bf}.badge.good{background:#143322;color:#7be0a0}.badge.warn{background:#392b13;color:#ffd07b}.badge.danger{background:#3b1717;color:#ff8a8a}.bar{height:7px;background:#252925;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}.chart{height:180px;display:flex;align-items:end;gap:8px;padding-top:20px}.chart i{flex:1;background:linear-gradient(#ff9a4c,#c9551c);border-radius:8px 8px 3px 3px;min-height:12px}.muted{color:var(--muted)}.section-title{font-size:17px;font-weight:800;margin:0 0 16px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #222622}.row:last-child{border-bottom:0}.dot{width:9px;height:9px;border-radius:50%;background:var(--good);display:inline-block;margin-right:8px}.dot.warn{background:var(--warn)}.dot.danger{background:var(--danger)}.case{display:grid;grid-template-columns:1fr auto;gap:8px;padding:15px;border:1px solid var(--line);border-radius:15px;margin-bottom:10px;background:#151815}.case h4{margin:0 0 5px}.case p{margin:0;color:var(--muted);font-size:12px}.empty{text-align:center;padding:50px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:#000a;display:none;place-items:center;padding:20px;z-index:20}.modal.open{display:grid}.modal-box{width:min(560px,100%);background:#121512;border:1px solid #343a34;border-radius:24px;padding:24px}.modal-head{display:flex;justify-content:space-between;gap:15px}.close{background:#222722;border:0;color:#fff;border-radius:10px;width:36px;height:36px}.option{display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #242824}.switch{width:48px;height:28px;background:#303530;border-radius:99px;padding:3px;border:0}.switch i{display:block;width:22px;height:22px;background:#fff;border-radius:50%;transition:.2s}.switch.on{background:var(--accent)}.switch.on i{transform:translateX(20px)}
+.toast{position:fixed;right:20px;bottom:20px;background:#f2f3ef;color:#111;padding:13px 17px;border-radius:13px;font-weight:700;display:none;z-index:30;box-shadow:0 10px 35px #0007}.toast.show{display:block}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#ff8a3214,transparent 42%)}.login-box{width:min(440px,100%);background:#111311;border:1px solid var(--line);border-radius:28px;padding:32px;box-shadow:0 30px 80px #0008}.login-box h1{margin:20px 0 8px;font-size:30px}.field{margin:18px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}.field input{width:100%;background:#0b0d0b;border:1px solid var(--line);color:#fff;border-radius:12px;padding:12px;outline:none}.field input:focus{border-color:var(--accent)}.login-note{font-size:12px;color:#737a73;line-height:1.5;margin-top:16px}
+@media(max-width:900px){.side{width:76px;padding:18px 10px}.logo span,.nav button span,.side-foot{display:none}.logo{justify-content:center;margin-bottom:22px}.nav button{text-align:center}.nav button{font-size:0}.nav button::first-letter{font-size:18px}main{margin-left:76px;width:calc(100% - 76px);padding:18px}.span8,.span4,.span6{grid-column:span 12}.title{font-size:27px}}
+@media(max-width:600px){.side{position:fixed;top:auto;bottom:0;left:0;right:0;width:100%;height:66px;flex-direction:row;padding:8px;border-right:0;border-top:1px solid var(--line)}.logo{display:none}.nav{display:flex;justify-content:space-around;width:100%}.nav button{padding:10px;font-size:0}.nav button:first-letter{font-size:19px}main{margin:0 0 66px;width:100%;padding:15px}.top{align-items:flex-start}.hero h2{font-size:24px}.grid{gap:12px}.card{padding:17px}.actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<div id="login" class="login">
+  <div class="login-box">
+    <div class="logo" style="margin:0"><div class="mark">M</div><span>Haven</span></div>
+    <h1>Private wellbeing support.</h1>
+    <p class="muted">A private, consent-first space for check-ins, personal trends and human support.</p>
+    <div class="field"><label>Email</label><input id="email" type="email" value="demo@haven.local" autocomplete="email"></div>
+    <div class="field"><label>Password</label><input id="password" type="password" value="demo1234"></div>
+    <button class="btn primary" style="width:100%" onclick="login()">Sign in to demo</button>
+    <div class="login-note">Demo mode only. No real mental-health data is transmitted. This static build stores demo state in your browser.</div>
+  </div>
+</div>
+
+<div id="app" class="app" style="display:none">
+<aside class="side">
+  <div class="logo"><div class="mark">M</div><span>Haven</span></div>
+  <nav class="nav">
+    <button class="active" onclick="show('home',this)">⌂ <span>Overview</span></button>
+    <button onclick="show('checkin',this)">◉ <span>Check-in</span></button>
+    <button onclick="show('trajectory',this)">⌁ <span>Trajectory</span></button>
+    <button onclick="show('cases',this)">◫ <span>Counsellor</span></button>
+    <button onclick="show('privacy',this)">◇ <span>Privacy</span></button>
+  </nav>
+  <div class="side-foot">Consent-first demo<br>v2.0 · static Netlify build</div>
+</aside>
+
+<main>
+<header class="top"><div><div class="eyebrow">Your private wellbeing space</div><div class="title" id="pageTitle">Good evening</div><div class="sub">Your wellbeing signals stay under your control.</div></div><div class="avatar">SK</div></header>
+
+<section id="home" class="view active">
+<div class="grid">
+  <div class="card hero span8"><div><div class="badge good">● Stable baseline</div><h2>A small check-in can help you notice change early.</h2><p>Haven looks at patterns you choose to share. It does not diagnose you. If something looks meaningfully different from your baseline, a human counsellor can review the evidence.</p></div><div class="actions"><button class="btn primary" onclick="show('checkin')">Start check-in</button><button class="btn ghost" onclick="show('privacy')">Review privacy</button></div></div>
+  <div class="card span4"><div class="section-title">Today's state</div><div class="stat"><div><span class="muted">Wellbeing signal</span><br><b id="score">72</b><span class="muted"> / 100</span></div><span class="badge good">Stable</span></div><div style="margin:18px 0 8px" class="bar"><i style="width:72%"></i></div><small class="muted">Based on your recent voluntary check-ins.</small></div>
+  <div class="card span6"><div class="section-title">7-day trajectory</div><div class="chart"><i style="height:46%"></i><i style="height:54%"></i><i style="height:49%"></i><i style="height:61%"></i><i style="height:57%"></i><i style="height:68%"></i><i style="height:72%"></i></div><div class="sub">Recent signals are within your personal range.</div></div>
+  <div class="card span6"><div class="section-title">Privacy status</div><div class="row"><span>Text check-ins</span><span class="badge good">Allowed</span></div><div class="row"><span>Voice processing</span><span class="badge">Off</span></div><div class="row"><span>Wearable signals</span><span class="badge">Off</span></div><div class="row"><span>Raw audio storage</span><span class="badge good">Never</span></div></div>
+  <div class="card span12"><div class="section-title">Recent activity</div><div id="activity"></div></div>
+</div>
+</section>
+
+<section id="checkin" class="view">
+<div class="grid"><div class="card span8"><div class="eyebrow">2 minutes</div><h2>How are you feeling today?</h2><p class="muted">Choose what feels accurate. There is no right answer.</p><div id="moods" class="actions" style="margin:24px 0"><button class="btn" onclick="mood(this,1)">Low</button><button class="btn" onclick="mood(this,2)">A little low</button><button class="btn" onclick="mood(this,3)">Okay</button><button class="btn" onclick="mood(this,4)">Good</button><button class="btn" onclick="mood(this,5)">Very good</button></div><label class="muted" style="font-size:13px">Optional note</label><textarea id="note" style="width:100%;min-height:120px;margin-top:8px;background:#0b0d0b;border:1px solid var(--line);border-radius:14px;color:#fff;padding:13px;resize:vertical" placeholder="What would you like to remember about today?"></textarea><div class="actions" style="margin-top:16px"><button class="btn primary" onclick="saveCheckin()">Save check-in</button><button class="btn" onclick="startVoice()">Voice check-in (demo)</button></div></div><div class="card span4"><div class="section-title">Before you share</div><p class="muted" style="line-height:1.6">Only information covered by your consent is processed. A check-in is not a diagnosis or emergency assessment.</p><div class="badge warn">Need immediate help?</div><p class="muted">Use your local emergency service or a trusted person if you are in immediate danger.</p></div></div>
+</section>
+
+<section id="trajectory" class="view"><div class="grid"><div class="card span8"><div class="section-title">Your trajectory</div><div class="chart" style="height:280px"><i style="height:39%"></i><i style="height:51%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:63%"></i><i style="height:55%"></i><i style="height:71%"></i><i style="height:67%"></i><i style="height:76%"></i><i style="height:72%"></i></div><div class="row"><span>Personal baseline</span><span class="badge good">Within range</span></div></div><div class="card span4"><div class="section-title">What changed?</div><div class="row"><span>Check-in consistency</span><b>86%</b></div><div class="row"><span>Recent mood</span><b>+8%</b></div><div class="row"><span>Signal confidence</span><b>Medium</b></div><p class="muted" style="font-size:12px;margin-top:18px">These are descriptive signals, not a medical conclusion.</p></div></div></section>
+
+<section id="cases" class="view"><div class="grid"><div class="card span8"><div class="section-title">Counsellor queue</div><div id="casesList"></div></div><div class="card span4"><div class="section-title">Explainable alert</div><div class="badge warn">Elevated signal</div><h3 style="margin-bottom:6px">Why this case appeared</h3><p class="muted">Recent check-in variation is above the person's baseline range.</p><div class="row"><span>Evidence</span><b>3 signals</b></div><div class="row"><span>Trend</span><b>7 days</b></div><div class="row"><span>Action</span><b>Human review</b></div><button class="btn primary" style="width:100%;margin-top:14px" onclick="toast('Case acknowledged — demo only')">Acknowledge</button></div></div></section>
+
+<section id="privacy" class="view"><div class="grid"><div class="card span8"><div class="section-title">Your consent</div><div class="option"><div><b>Text check-ins</b><div class="muted">Use voluntary written check-ins for trajectory signals.</div></div><button id="sText" class="switch on" onclick="toggleConsent('text',this)"><i></i></button></div><div class="option"><div><b>Voice processing</b><div class="muted">Short, bounded processing. Raw audio is not stored in this demo.</div></div><button id="sVoice" class="switch" onclick="toggleConsent('voice',this)"><i></i></button></div><div class="option"><div><b>Wearable signals</b><div class="muted">Future integration for supported, consented health/activity metrics.</div></div><button id="sWear" class="switch" onclick="toggleConsent('wear',this)"><i></i></button></div><div class="actions" style="margin-top:20px"><button class="btn" onclick="revoke()">Revoke all consent</button><button class="btn" onclick="deleteData()">Delete demo data</button></div></div><div class="card span4"><div class="section-title">Privacy ledger</div><div id="ledger"></div></div></div></section>
+</main></div>
+
+<div id="modal" class="modal"><div class="modal-box"><div class="modal-head"><div><div class="eyebrow">Voice check-in</div><h2 style="margin:5px 0">Consent-gated demo</h2></div><button class="close" onclick="closeModal()">×</button></div><p class="muted" id="voiceText">Voice processing is currently off. Enable voice consent in Privacy first.</p><div class="bar" style="margin:20px 0"><i id="voiceBar" style="width:0"></i></div><button class="btn primary" id="voiceBtn" style="width:100%" onclick="runVoice()">Start processing</button></div></div>
+<div id="toast" class="toast"></div>
+<script>
+const state={mood:3,consent:{text:true,voice:false,wear:false},activity:[
+["Today","Text check-in saved","Within baseline"],
+["Yesterday","Trajectory reviewed","Stable"],
+["2 days ago","Consent settings reviewed","No changes"]
+]};
+function login(){document.getElementById('login').style.display='none';document.getElementById('app').style.display='flex';render();}
+function show(id,el){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active');const names={home:'Good evening',checkin:'Daily check-in',trajectory:'Your trajectory',cases:'Counsellor workspace',privacy:'Privacy & consent'};document.getElementById('pageTitle').textContent=names[id]||'Haven';}
+function mood(el,n){state.mood=n;document.querySelectorAll('#moods .btn').forEach(x=>x.style.borderColor='');el.style.borderColor='var(--accent)';}
+function saveCheckin(){if(!state.consent.text){toast('Text consent is off');return}state.activity.unshift(['Just now','Text check-in saved',['Low','A little low','Okay','Good','Very good'][state.mood-1]]);document.getElementById('score').textContent=60+state.mood*4;document.getElementById('note').value='';toast('Check-in saved locally in demo mode');render();}
+function startVoice(){document.getElementById('modal').classList.add('open');if(!state.consent.voice){document.getElementById('voiceText').textContent='Voice processing is currently off. Enable voice consent in Privacy first.';document.getElementById('voiceBtn').disabled=true;document.getElementById('voiceBtn').style.opacity=.5}else{document.getElementById('voiceText').textContent='No raw audio is stored by this static demo. Processing is simulated.';document.getElementById('voiceBtn').disabled=false;document.getElementById('voiceBtn').style.opacity=1}}
+function runVoice(){let p=0;const bar=document.getElementById('voiceBar'),txt=document.getElementById('voiceText'),btn=document.getElementById('voiceBtn');btn.disabled=true;const t=setInterval(()=>{p+=10;bar.style.width=p+'%';txt.textContent='Processing consented voice features… '+p+'%';if(p>=100){clearInterval(t);txt.textContent='Demo processing complete. No audio was saved.';btn.disabled=false;toast('Voice demo completed')}} ,120)}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function toggleConsent(k,b){state.consent[k]=!state.consent[k];b.classList.toggle('on',state.consent[k]);state.activity.unshift(['Just now','Consent changed',k+': '+(state.consent[k]?'allowed':'revoked')]);render();toast('Consent updated')}
+function revoke(){Object.keys(state.consent).forEach(k=>state.consent[k]=false);document.querySelectorAll('.switch').forEach(x=>x.classList.remove('on'));state.activity.unshift(['Just now','All consent revoked','Privacy action']);render();toast('All demo consent revoked')}
+function deleteData(){state.activity=[];toast('Demo data deleted');render()}
+function render(){document.getElementById('activity').innerHTML=state.activity.slice(0,5).map(a=>`<div class="row"><div><b>${esc(a[1])}</b><div class="muted">${esc(a[0])}</div></div><span class="badge">${esc(a[2])}</span></div>`).join('')||'<div class="empty">No demo activity.</div>';document.getElementById('ledger').innerHTML=state.activity.slice(0,6).map(a=>`<div class="row"><div><b>${esc(a[1])}</b><div class="muted">${esc(a[0])}</div></div></div>`).join('')||'<div class="empty">Empty</div>';document.getElementById('casesList').innerHTML=[['Case MR-204','Elevated signal','3 evidence points','warn'],['Case MR-198','Stable follow-up','Within baseline','good'],['Case MR-177','Review requested','Awaiting acknowledgement','danger']].map(c=>`<div class="case"><div><h4>${c[0]}</h4><p>${c[1]} · ${c[2]}</p></div><span class="badge ${c[3]}">${c[3]==='danger'?'Review':c[3]==='warn'?'Elevated':'Stable'}</span></div>`).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+render();
+</script>
+</body>
+</html>
